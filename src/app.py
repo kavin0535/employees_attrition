@@ -2,6 +2,7 @@ import joblib
 import pandas as pd
 import os
 from flask import Flask, request, jsonify
+i
 
 print("STARTING APP...")
 app = Flask(__name__)
@@ -28,13 +29,26 @@ def home():
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    data = request.get_json()
+    try:
+        data = request.get_json()
 
-    # Convert input to DataFrame
-    df = pd.DataFrame([data])
+        # Convert input to DataFrame
+        input_df = pd.DataFrame([data])
 
-    # ⚠️ IMPORTANT: must match training preprocessing
-    df = pd.get_dummies(df)
+        # Match training columns
+        input_df = input_df.reindex(columns=columns, fill_value=0)
+
+        # Prediction
+        prediction = model.predict(input_df)[0]
+        probability = model.predict_proba(input_df)[0][1]
+
+        return jsonify({
+            "Attrition": "Yes" if prediction == 1 else "No",
+            "Probability": float(probability)
+        })
+
+    except Exception as e:
+        return jsonify({"error": str(e)})
 
     # Align with model features
     columns = joblib.load("../model/columns.joblib")
