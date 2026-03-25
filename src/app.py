@@ -3,11 +3,14 @@ import pandas as pd
 import os
 from flask import Flask, request, jsonify
 
+print("STARTING APP...")
 app = Flask(__name__)
 
 # Load model
+print("Loading model...")
 model = joblib.load("model/model.pkl")
 columns = joblib.load("model/columns.pkl")
+print("Model loaded")
 
 @app.route("/")
 def home():
