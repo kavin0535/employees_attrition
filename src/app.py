@@ -11,8 +11,8 @@ print("Loading model...")
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-model_path = os.path.join(BASE_DIR, "model", "model.pkl")
-columns_path = os.path.join(BASE_DIR, "model", "columns.pkl")
+model_path = os.path.join(BASE_DIR, "models", "model.pkl")
+columns_path = os.path.join(BASE_DIR, "models", "columns.pkl")
 
 print("Loading model from:", model_path)
 
