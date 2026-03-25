@@ -8,8 +8,18 @@ app = Flask(__name__)
 
 # Load model
 print("Loading model...")
-model = joblib.load("model/model.pkl")
-columns = joblib.load("model/columns.pkl")
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+model_path = os.path.join(BASE_DIR, "model", "model.pkl")
+columns_path = os.path.join(BASE_DIR, "model", "columns.pkl")
+
+print("Loading model from:", model_path)
+
+model = joblib.load(model_path)
+columns = joblib.load(columns_path)
+
+print("Model loaded")
 print("Model loaded")
 
 @app.route("/")
